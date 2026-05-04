@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supply Chain Tracker | Blockchain</title>
+    <!-- Google Fonts қолдану -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00d4ff;
+            --secondary-color: #0055ff;
+            --bg-overlay: rgba(10, 15, 30, 0.85);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            color: white;
+            /* Фонға блокчейн тақырыбындағы сурет */
+            background: url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') no-content center center fixed;
+            background-size: cover;
+        }
+
+        .overlay {
+            min-height: 100vh;
+            background: var(--bg-overlay);
+            padding: 40px 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Форма стилі */
+        form {
+            max-width: 400px;
+            margin: 0 auto 50px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px var(--primary-color);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        /* Блоктар тізімі */
+        .chain-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .block-card {
+            background: rgba(0, 0, 0, 0.6);
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transition: 0.4s;
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .block-card:hover {
+            transform: translateY(-10px);
+            border-left-color: #00ff88;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .block-card b {
+            color: var(--primary-color);
+        }
+
+        .hash-text {
+            font-size: 0.8rem;
+            word-break: break-all;
+            color: #aaa;
+            font-family: monospace;
+        }
+
+        /* Анимациялар */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+            margin: 40px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay">
+    <h2>📦 Тауар қосу</h2>
+
+    <form method="POST">
+        <input name="product" placeholder="Тауар аты" required>
+        <input name="origin" placeholder="Қайдан (Origin)" required>
+        <input name="destination" placeholder="Қайда (Destination)" required>
+        <button type="submit">Жүйеге қосу</button>
+    </form>
+
+    <hr>
+
+    <h2>🔗 Блокчейн тізбегі</h2>
+
+    <div class="chain-container">
+        {% for block in chain %}
+        <div class="block-card" style="animation-delay: {{ loop.index0 * 0.1 }}s">
+            <p><b>Index:</b> #{{ block.index }}</p>
+            <p><b>Time:</b> <span style="font-size: 0.9rem;">{{ block.timestamp }}</span></p>
+            <p><b>Data:</b> {{ block.data }}</p>
+            <p><b>Hash:</b><br><span class="hash-text">{{ block.hash }}</span></p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
