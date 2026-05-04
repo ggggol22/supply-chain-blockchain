@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from blockchain import Blockchain
+import os
 
 app = Flask(__name__)
 bc = Blockchain()
@@ -10,15 +11,17 @@ def index():
         product = request.form.get("product")
         origin = request.form.get("origin")
         destination = request.form.get("destination")
-
+        
         if product and origin and destination:
             bc.add_block({
                 "product": product,
                 "from": origin,
                 "to": destination
             })
-
+            
     return render_template("index.html", chain=bc.chain)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Render үшін портты автоматты түрде анықтау баптауы
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
